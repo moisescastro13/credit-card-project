@@ -11,6 +11,10 @@ public class CreditCard: Entity<CreditCardID>
     public required DateTime ExpirationDate { get; set; }
     public required DateTime PaymentDate { get; set; }
     public required DateTime CutOffDate { get; set; }
-    public CreditCardDetails CreditCardDetails { get; set;}
+    public required CreditCardDetails CreditCardDetails { get; set;}
     public IReadOnlyCollection<CreditCardTransaction> CreditCardTransactions => _creditCardTransactions;
+
+    public CreditCard() 
+    {
+    }
 }

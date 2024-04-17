@@ -9,4 +9,5 @@ public class CreditCardDetails: Entity<CreditCardDetailsID>
     public required double Interest { get; set; }
     public required double Currentbalance { get; set; }
     public required double CurrentInterest { get; set; }
+    public virtual CreditCard CreditCard { get; set; }
 }
