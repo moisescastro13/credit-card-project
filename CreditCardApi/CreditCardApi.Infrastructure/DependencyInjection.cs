@@ -1,4 +1,5 @@
-﻿using CreditCardApi.Infrastructure.Persistence;
+﻿using CreditCardApi.Infrastructure.Interfaces;
+using CreditCardApi.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -10,7 +11,7 @@ public static class DependencyInjection
     public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddDbContext<ApplicationDbContext>(x => x.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
-        //services.AddScoped<DbContext, ApplicationDbContext>();
+        services.AddScoped<IUnitOfWork, UnitOfWork>();
 
         //services.ConfigureJwt(configuration);
         //services.AddScoped<IJWTTokenService, JwtServiceManage>();

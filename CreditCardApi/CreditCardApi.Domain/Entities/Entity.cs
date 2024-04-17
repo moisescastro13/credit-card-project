@@ -10,3 +10,7 @@ public class Entity<T>
     {
     }
 }
+public interface BaseRecordID
+{
+    long value { get; }
+}
