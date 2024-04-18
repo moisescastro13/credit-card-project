@@ -10,6 +10,7 @@ internal class CreditCardTransactionConfiguration : IEntityTypeConfiguration<Cre
     {
         builder.HasKey(x => x.Id);
         builder.Property(x => x.Id).ValueGeneratedOnAdd();
+
         builder.Property(x => x.Id).HasConversion(x => x.value, x => new CreditCardTransactionID(x));
 
         builder.Property(x => x.TransactionType).HasConversion(x => (int) x, x => (TransactionType) x);

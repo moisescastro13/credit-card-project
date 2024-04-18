@@ -10,4 +10,15 @@ public class CreditCardDetails: Entity<CreditCardDetailsID>
     public double Currentbalance { get; set; }
     public double CurrentInterest { get; set; }
     public virtual CreditCard CreditCard { get; set; }
+
+    public CreditCardDetails(CreditCardID creditCarID, CreditCardType creditCardType, double balance, double interest, double currentbalance, double currentInterest)
+    {
+        CreditCarID = creditCarID;
+        CreditCardType = creditCardType;
+        this.balance = balance;
+        Interest = interest;
+        Currentbalance = currentbalance;
+        CurrentInterest = currentInterest;
+    }
+
 }

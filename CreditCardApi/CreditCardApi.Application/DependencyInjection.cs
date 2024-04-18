@@ -10,10 +10,6 @@ public static class DependencyInjection
         services.AddAutoMapper(Assembly.GetExecutingAssembly());
         services.AddMediatR(config => config.RegisterServicesFromAssemblies(Assembly.GetExecutingAssembly()));
 
-       // services.AddScoped<IPasswordHasher, PasswordHasher>();
-      //  services.AddScoped<ILoginService, LoginService>();
-      //  services.AddScoped<IUserRegisterService, UserRegisterService>();
-        //services.AddScoped<ICreateBoxSavingService, CreateBoxSavingService>();
         return services;
     }
 }

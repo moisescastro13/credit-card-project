@@ -25,9 +25,6 @@ internal class CreditCardConfiguration : IEntityTypeConfiguration<CreditCard>
         builder.HasMany(x => x.CreditCardTransactions)
             .WithOne()
             .HasForeignKey(x => x.CreditCardID);
-
-        builder.Ignore(x => x.CreditCardTransactions);
-
     }
 }
 

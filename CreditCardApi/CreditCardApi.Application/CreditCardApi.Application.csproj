@@ -7,8 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Features\CreditCard\Querys\" />
-    <Folder Include="Features\Transactions\" />
     <Folder Include="Interfaces\" />
   </ItemGroup>
 
@@ -17,6 +15,7 @@
     <PackageReference Include="FluentValidation" Version="11.9.0" />
     <PackageReference Include="MediatR" Version="12.2.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.1" />
+    <PackageReference Include="ToDataTable" Version="0.1.2" />
   </ItemGroup>
 
   <ItemGroup>

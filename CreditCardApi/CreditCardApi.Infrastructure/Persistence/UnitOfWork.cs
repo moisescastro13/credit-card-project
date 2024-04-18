@@ -1,5 +1,6 @@
 ﻿using CreditCardApi.Domain.Entities;
 using CreditCardApi.Infrastructure.Interfaces;
+using CreditCardApi.Infrastructure.Interfaces.Repositories;
 using CreditCardApi.Infrastructure.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore.Storage;
 
@@ -10,15 +11,15 @@ internal class UnitOfWork : IUnitOfWork
     private readonly ApplicationDbContext _context;
     private IDbContextTransaction _objTran;
 
-    private IRepository<CreditCard, CreditCardID> _creditCardRepository;
+    private ICreditCardRepository _creditCardRepository;
     private IRepository<CreditCardDetails, CreditCardDetailsID> _creditCardDetailsRepository;
-    private IRepository<CreditCardTransaction, CreditCardTransactionID> _transactionRepository;
+    private ITransactionRepository _transactionRepository;
     public UnitOfWork(ApplicationDbContext context)
     {
         _context = context;
        
     }
-    public IRepository<CreditCard, CreditCardID> CreditCardRepository
+    public ICreditCardRepository CreditCardRepository
     {
         get
         {
@@ -34,7 +35,7 @@ internal class UnitOfWork : IUnitOfWork
             return _creditCardDetailsRepository;
         }
     }
-    public IRepository<CreditCardTransaction, CreditCardTransactionID> TransactionRepository
+    public ITransactionRepository TransactionRepository
     {
         get
         {

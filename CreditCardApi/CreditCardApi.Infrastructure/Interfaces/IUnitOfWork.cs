@@ -1,15 +1,15 @@
 ﻿
 using CreditCardApi.Domain.Entities;
+using CreditCardApi.Infrastructure.Interfaces.Repositories;
 using Microsoft.Data.SqlClient;
 
 namespace CreditCardApi.Infrastructure.Interfaces;
 
 public interface IUnitOfWork: IDisposable
 {
-    IRepository<CreditCard, CreditCardID> CreditCardRepository { get; }
+    ICreditCardRepository CreditCardRepository { get; }
     IRepository<CreditCardDetails, CreditCardDetailsID> CreditCardDetailsRepository { get; }
-    IRepository<CreditCardTransaction, CreditCardTransactionID> TransactionRepository { get; }
-
+    ITransactionRepository TransactionRepository { get; }
     Task<int> SaveChangesAsync();
     void CreateTransaction();
     Task CommitAsync();
