@@ -7,19 +7,21 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Folder Include="Features\CreditCard\Querys\" />
+    <Folder Include="Features\Transactions\" />
     <Folder Include="Interfaces\" />
-    <Folder Include="Mapper\" />
-    <Folder Include="Services\" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="13.0.1" />
     <PackageReference Include="FluentValidation" Version="11.9.0" />
+    <PackageReference Include="MediatR" Version="12.2.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.1" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\CreditCardApi.Domain\CreditCardApi.Domain.csproj" />
+    <ProjectReference Include="..\CreditCardApi.Infrastructure\CreditCardApi.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

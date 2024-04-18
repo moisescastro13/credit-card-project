@@ -9,7 +9,12 @@ internal class CreditCardConfiguration : IEntityTypeConfiguration<CreditCard>
     public void Configure(EntityTypeBuilder<CreditCard> builder)
     {
         builder.HasKey(x => x.Id);
+        builder.Property(x => x.Id).ValueGeneratedOnAdd();
+        
         builder.Property(x => x.Id).HasConversion(x => x.value, x => new CreditCardID(x));
+
+        builder.Property(x => x.CreditCardNumber).HasMaxLength(16);
+        builder.HasIndex(x => x.CreditCardNumber).IsUnique();
 
         builder.Property(x => x.CVV).HasMaxLength(3);
 

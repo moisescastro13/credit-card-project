@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CreditCardApi.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240417145336_first_migration")]
-    partial class first_migration
+    [Migration("20240418035102_add_constrains")]
+    partial class add_constrains
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -27,10 +27,12 @@ namespace CreditCardApi.Infrastructure.Migrations
 
             modelBuilder.Entity("CreditCardApi.Domain.Entities.CreditCard", b =>
                 {
-                    b.Property<long>("Id")
-                        .HasColumnType("bigint");
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("CVV")
+                        .HasMaxLength(3)
                         .HasColumnType("int");
 
                     b.Property<string>("ClientName")
@@ -44,6 +46,7 @@ namespace CreditCardApi.Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<long>("CreditCardNumber")
+                        .HasMaxLength(16)
                         .HasColumnType("bigint");
 
                     b.Property<DateTime>("CutOffDate")
@@ -63,19 +66,23 @@ namespace CreditCardApi.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CreditCardNumber")
+                        .IsUnique();
+
                     b.ToTable("CreditCards");
                 });
 
             modelBuilder.Entity("CreditCardApi.Domain.Entities.CreditCardDetails", b =>
                 {
-                    b.Property<long>("Id")
-                        .HasColumnType("bigint");
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<long>("CreditCarID")
-                        .HasColumnType("bigint");
+                    b.Property<Guid>("CreditCarID")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("CreditCardType")
                         .HasColumnType("int");
@@ -108,8 +115,9 @@ namespace CreditCardApi.Infrastructure.Migrations
 
             modelBuilder.Entity("CreditCardApi.Domain.Entities.CreditCardTransaction", b =>
                 {
-                    b.Property<long>("Id")
-                        .HasColumnType("bigint");
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<double>("Amount")
                         .HasColumnType("float");
@@ -121,8 +129,8 @@ namespace CreditCardApi.Infrastructure.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<long>("CreditCardID")
-                        .HasColumnType("bigint");
+                    b.Property<Guid>("CreditCardID")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime?>("DeleteAt")
                         .HasColumnType("datetime2");

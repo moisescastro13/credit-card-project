@@ -15,10 +15,10 @@ namespace CreditCardApi.Infrastructure.Migrations
                 name: "CreditCards",
                 columns: table => new
                 {
-                    Id = table.Column<long>(type: "bigint", nullable: false),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CreditCardNumber = table.Column<long>(type: "bigint", nullable: false),
                     ClientName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CVV = table.Column<int>(type: "int", nullable: false),
+                    CVV = table.Column<int>(type: "int", maxLength: 3, nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ExpirationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     PaymentDate = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -36,8 +36,8 @@ namespace CreditCardApi.Infrastructure.Migrations
                 name: "CreditCardDetails",
                 columns: table => new
                 {
-                    Id = table.Column<long>(type: "bigint", nullable: false),
-                    CreditCarID = table.Column<long>(type: "bigint", nullable: false),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CreditCarID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CreditCardType = table.Column<int>(type: "int", nullable: false),
                     balance = table.Column<double>(type: "float", nullable: false),
                     Interest = table.Column<double>(type: "float", nullable: false),
@@ -62,8 +62,8 @@ namespace CreditCardApi.Infrastructure.Migrations
                 name: "CreditCardTransactions",
                 columns: table => new
                 {
-                    Id = table.Column<long>(type: "bigint", nullable: false),
-                    CreditCardID = table.Column<long>(type: "bigint", nullable: false),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CreditCardID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Concept = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     TransactionType = table.Column<int>(type: "int", nullable: false),
                     TransactionDate = table.Column<DateTime>(type: "datetime2", nullable: false),

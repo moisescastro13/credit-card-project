@@ -1,16 +1,15 @@
 ﻿
-namespace CreditCardApi.Domain.Entities
+namespace CreditCardApi.Domain.Entities;
+
+
+public record CreditCardID : BaseRecordID
 {
- 
-    public record CreditCardID : BaseRecordID
+    private readonly Guid _value;
+    public CreditCardID(Guid value)
     {
-        private readonly long _value;
-        public CreditCardID(long value)
-        {
-            _value = value;
-        }
-
-        public long value => _value;
-
+        _value = value;
     }
+
+    public Guid value => _value;
+
 }
