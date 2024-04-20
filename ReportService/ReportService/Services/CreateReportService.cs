@@ -1,11 +1,9 @@
-﻿using Dapper;
+﻿using Aspose.Pdf;
+using Aspose.Pdf.Text;
+using Dapper;
 using ReportService.Interfaces;
 using ReportService.Models;
 using System.Data;
-using static System.Net.Mime.MediaTypeNames;
-using System.Xml.Linq;
-using PdfSharp.Pdf;
-using PdfSharp.Drawing;
 
 namespace ReportService.Services;
 
@@ -18,12 +16,13 @@ public class CreateReportService : IReportService
         _context = context;
     }
 
-    public async Task<Response> Execute(Guid CreditCardId)
+    public async Task<Response> Execute(ReportQuery reportQuery)
     {
         Response response = new Response();
 
         var parameters = new DynamicParameters();
-        parameters.Add("@CreditCardId", CreditCardId);
+        parameters.Add("@CreditCardId", reportQuery.CreditCardId);
+        parameters.Add("@FromDate", reportQuery.FromDate);
 
         using IDbConnection conn = _context.CreateConnection();
         using var multi = await conn.QueryMultipleAsync("CreateTransactionReport", parameters, commandType: CommandType.StoredProcedure);
@@ -34,28 +33,54 @@ public class CreateReportService : IReportService
         return response;
     }
 
-    public async Task<MemoryStream> ExecutePDF(Guid CreditCardId)
+    public async Task<IEnumerable<Byte>> ExecutePDF(ReportQuery reportQuery)
     {
-        var response = await Execute(CreditCardId);
+        var response = await Execute(reportQuery);
 
-        PdfDocument document = new PdfDocument();
+        using Document pdfDocument = new Document();
 
-        PdfPage page = document.AddPage();
+        Page page = pdfDocument.Pages.Add();
 
-        XGraphics gfx = XGraphics.FromPdfPage(page);
+        AddText($"Saldo: {response.CreditCardDetails.balance}\n", page);
+        AddText($"Total a pagar: {response.CreditCardDetails.Currentbalance}\n", page);
+        AddText($"Interes : {response.CreditCardDetails.Interest}\n", page);
+        AddText($"Transacciones:\n\n", page);
 
-        XFont font = new XFont("Verdana", 20);
+        Table table = new Table
+        {
+            ColumnWidths = "110 60 130 70 90"
+        };
 
-        gfx.DrawString("¡Hola, mundo!", font, XBrushes.Black,
-            new XRect(0, 0, page.Width, page.Height),
-            XStringFormats.Center);
+        Row headerRow = table.Rows.Add();
+        headerRow.Cells.Add("Concepto");
+        headerRow.Cells.Add("Monto");
+        headerRow.Cells.Add("Fecha de Transaccion");
+        headerRow.Cells.Add("Saldo Anterior");
+        headerRow.Cells.Add("Saldo");
 
-        var stream = new MemoryStream();
+        foreach (var transaction in response.Transactions)
+        {
+            Row dataRow = table.Rows.Add();
+            dataRow.Cells.Add(transaction.Concept);
+            dataRow.Cells.Add($"${transaction.Amount.ToString("N2")}");
+            dataRow.Cells.Add(transaction.TransactionDate.ToString("yyyy/MM/dd hh:mm:ss tt"));
+            dataRow.Cells.Add(transaction.OldBalance.ToString());
+            dataRow.Cells.Add(transaction.NewBalance.ToString());
+           foreach(TextFragment textFragment in dataRow.Cells[1].Paragraphs)
+            {
+                textFragment.TextState.ForegroundColor = transaction.TransactionType == 1 ? Color.Red : Color.Green;
+                textFragment.TextState.FontStyle = FontStyles.Bold;
+            }
+        }
 
-        document.Save(stream, false);
-        stream.Seek(0, SeekOrigin.Begin);
+        page.Paragraphs.Add(table);
 
-        //return File(, "application/pdf", "archivo.pdf");
-        return stream;
+        using MemoryStream memoryStream = new MemoryStream();
+
+        pdfDocument.Save(memoryStream);
+
+        return memoryStream.ToArray();
     }
+    private void AddText(string text, Page page) => page.Paragraphs.Add(new TextFragment(text));
+
 }

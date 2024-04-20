@@ -7,9 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Aspose.PDF" Version="24.4.0" />
     <PackageReference Include="Dapper" Version="2.1.35" />
     <PackageReference Include="Microsoft.Data.SqlClient" Version="5.2.0" />
-    <PackageReference Include="PDFsharp" Version="6.0.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
   </ItemGroup>
 

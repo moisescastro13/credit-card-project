@@ -61,14 +61,30 @@ BEGIN
 END;
 
 CREATE PROCEDURE CreateTransactionReport
-    @CreditCardId UNIQUEIDENTIFIER
+    @CreditCardId UNIQUEIDENTIFIER,
+    @FromDate DATETIME = NULL
 AS
 BEGIN
     BEGIN TRY
-        SELECT Concept, TransactionType, TransactionDate, Amount, OldBalance, NewBalance FROM CreditCardTransactions
-        WHERE CreditCardID = @CreditCardId
-		SELECT balance, Currentbalance, Interest FROM CreditCardDetails
-        WHERE CreditCardID = @CreditCardId
+        
+        IF(@FromDate IS NULL)
+        BEGIN
+            SET @FromDate = DATEADD(MONTH, -1, DATEADD(DAY, 1, EOMONTH(GETDATE())))
+        END
+        ELSE
+        BEGIN
+            SET @FromDate = DATEADD(MONTH, -1, DATEADD(DAY, 1, EOMONTH(@FromDate)))
+        END
+
+        SELECT Concept, TransactionType, TransactionDate, Amount, OldBalance, NewBalance 
+        FROM CreditCardTransactions
+         WHERE CreditCardID = @CreditCardId
+            AND TransactionDate >= @FromDate
+		
+        SELECT balance, Currentbalance, Interest 
+        FROM CreditCardDetails
+         WHERE CreditCardID = @CreditCardId
+
     END TRY
     BEGIN CATCH
 
@@ -85,8 +101,5 @@ BEGIN
 
     END CATCH
 END;
-
-
-
 
 

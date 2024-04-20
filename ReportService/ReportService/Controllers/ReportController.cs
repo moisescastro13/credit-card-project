@@ -1,10 +1,11 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ReportService.Interfaces;
+using ReportService.Models;
 
 namespace ReportService.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("Report")]
     [ApiController]
     public class ReportController : ControllerBase
     {
@@ -15,7 +16,8 @@ namespace ReportService.Controllers
             _reportService = reportService;
         }
 
-        [HttpGet("/{CreditCardId}")]
-        public async Task<IActionResult> Execute(Guid CreditCardId) => Ok( await _reportService.Execute(CreditCardId) );
+        [HttpGet]
+        public async Task<IActionResult> Execute([FromQuery] ReportQuery reportQuery) => 
+            Ok( await _reportService.Execute(reportQuery));
     }
 }

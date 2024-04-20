@@ -4,5 +4,6 @@ namespace ReportService.Interfaces;
 
 public interface IReportService
 {
-    Task<Response> Execute(Guid CreditCardId);
+    Task<Response> Execute(ReportQuery reportQuery);
+    Task<IEnumerable<Byte>> ExecutePDF(ReportQuery reportQuery);
 }
