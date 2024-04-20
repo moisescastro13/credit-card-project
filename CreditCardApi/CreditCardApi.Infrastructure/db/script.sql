@@ -27,9 +27,14 @@ AS
 BEGIN
     BEGIN TRY
 
-         INSERT INTO CreditCardTransactions (Id, CreditCardID, Concept, TransactionType, TransactionDate, Amount, CreatedAt)
-        SELECT Id, CreditCardID, Concept, TransactionType, TransactionDate, Amount, GETDATE()
-        FROM @Transaction;
+         INSERT INTO CreditCardTransactions (T.Id, T.CreditCardID, Concept, TransactionType, TransactionDate, Amount, CreatedAt, OldBalance, NewBalance)
+          SELECT Id, CreditCardID, Concept, TransactionType, TransactionDate, Amount, GETDATE(), CDD.Currentbalance,
+			CASE 
+				WHEN TransactionType = 0 THEN Currentbalance + Amount
+				WHEN TransactionType = 1 THEN Currentbalance - Amount
+			END
+		  FROM @Transaction T
+		  INNER JOIN CreditCardDetails CDD ON CDD.CreditCarID = T.CreditCardID
 
 		UPDATE CDD SET 
 		Currentbalance = CASE 
@@ -54,3 +59,34 @@ BEGIN
 
     END CATCH
 END;
+
+CREATE PROCEDURE CreateTransactionReport
+    @CreditCardId UNIQUEIDENTIFIER
+AS
+BEGIN
+    BEGIN TRY
+        SELECT Concept, TransactionType, TransactionDate, Amount, OldBalance, NewBalance FROM CreditCardTransactions
+        WHERE CreditCardID = @CreditCardId
+		SELECT balance, Currentbalance, Interest FROM CreditCardDetails
+        WHERE CreditCardID = @CreditCardId
+    END TRY
+    BEGIN CATCH
+
+        DECLARE @ErrorMessage NVARCHAR(MAX);
+        DECLARE @ErrorSeverity INT;
+        DECLARE @ErrorState INT;
+
+        SELECT
+            @ErrorMessage = ERROR_MESSAGE(),
+            @ErrorSeverity = ERROR_SEVERITY(),
+            @ErrorState = ERROR_STATE();
+
+        RAISERROR(@ErrorMessage, @ErrorSeverity, @ErrorState);
+
+    END CATCH
+END;
+
+
+
+
+

@@ -1,4 +1,5 @@
-﻿using CreditCardApi.Application.Features.CreditCards.Querys;
+﻿using CreditCardApi.Application.Dtos.CreditCard;
+using CreditCardApi.Application.Features.CreditCards.Querys;
 using CreditCardApi.Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -17,11 +18,11 @@ namespace CreditCardApi.Controllers.CreditCardControllers.Response
         }
 
         [HttpGet("{cardID}")]
-        public async Task<IActionResult> GetCreditCardInformation(string cardID)
+        public async Task<ReadCreditCardInformation?> GetCreditCardInformation(string cardID)
         {
             var query = new GetCreditCardInformationQuery(new CreditCardID(Guid.Parse(cardID)));
             
-            return Ok(await _mediator.Send(query));
+            return await _mediator.Send(query);
         }
     }
 }

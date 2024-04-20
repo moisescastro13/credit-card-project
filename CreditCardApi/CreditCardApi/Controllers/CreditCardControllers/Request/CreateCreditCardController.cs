@@ -17,12 +17,10 @@ namespace CreditCardApi.Controllers.CreditCardControllers.Request
         }
 
         [HttpPost]
-        public async Task<IActionResult> Run([FromBody] CreateCreditCardDto CreditCardDto)
+        public async Task Run([FromBody] CreateCreditCardDto CreditCardDto)
         {
             var command = new CreateCreditCardCommand(CreditCardDto);
             await _mediator.Send(command);
-
-            return Ok();
         }
     }
 }

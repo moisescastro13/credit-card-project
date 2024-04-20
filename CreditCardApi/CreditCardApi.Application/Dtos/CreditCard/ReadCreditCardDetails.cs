@@ -10,4 +10,8 @@ public class ReadCreditCardDetails
     public required double Interest { get; set; }
     public double Currentbalance { get; set; }
     public double CurrentInterest { get; set; }
+    public double CreditableInterest { get; set; }
+    public double MinimumFeeToPay { get; set; }
+
+
 }

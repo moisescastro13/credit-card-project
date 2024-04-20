@@ -18,6 +18,7 @@ internal class CreditCardConfiguration : IEntityTypeConfiguration<CreditCard>
 
         builder.Property(x => x.CVV).HasMaxLength(3);
 
+
         builder.HasOne(x => x.CreditCardDetails)
             .WithOne(x => x.CreditCard)
             .HasForeignKey<CreditCardDetails>(x => x.CreditCarID);

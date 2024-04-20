@@ -1,12 +1,9 @@
-﻿
-using CreditCardApi.Domain.Entities;
+﻿namespace ReportService.Models;
 
-namespace CreditCardApi.Application.Dtos.Transaction;
-
-public class ReadTransaction
+public class Transaction
 {
     public string Concept { get; set; }
-    public TransactionType TransactionType { get; set; }
+    public int TransactionType { get; set; }
     public DateTime TransactionDate { get; set; }
     public double Amount { get; set; }
     public double OldBalance { get; set; }

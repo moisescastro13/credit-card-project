@@ -9,7 +9,12 @@ public class CreditCardDetails: Entity<CreditCardDetailsID>
     public required double Interest { get; set; }
     public double Currentbalance { get; set; }
     public double CurrentInterest { get; set; }
+    public double MinimumFee { get; set; }
+    public double MinimumFeePercent { get; set; }
     public virtual CreditCard CreditCard { get; set; }
+    //ignore in sql
+    public double CreditableInterest => Currentbalance * (Interest / 100);
+    public double MinimumFeeToPay => Currentbalance * (MinimumFeePercent / 100);
 
     public CreditCardDetails(CreditCardID creditCarID, CreditCardType creditCardType, double balance, double interest, double currentbalance, double currentInterest)
     {

@@ -13,6 +13,10 @@ internal class CreditCardTransactionConfiguration : IEntityTypeConfiguration<Cre
 
         builder.Property(x => x.Id).HasConversion(x => x.value, x => new CreditCardTransactionID(x));
 
+        builder.Property(x => x.Amount).HasColumnType("Money");
+        builder.Property(x => x.OldBalance).HasColumnType("Money");
+        builder.Property(x => x.NewBalance).HasColumnType("Money");
+
         builder.Property(x => x.TransactionType).HasConversion(x => (int) x, x => (TransactionType) x);
     }
 }

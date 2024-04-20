@@ -4,6 +4,7 @@ using CreditCardApi.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CreditCardApi.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240419192436_Add_transactions_balances")]
+    partial class Add_transactions_balances
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -84,11 +87,11 @@ namespace CreditCardApi.Infrastructure.Migrations
                     b.Property<int>("CreditCardType")
                         .HasColumnType("int");
 
-                    b.Property<decimal>("CurrentInterest")
-                        .HasColumnType("Money");
+                    b.Property<double>("CurrentInterest")
+                        .HasColumnType("float");
 
-                    b.Property<decimal>("Currentbalance")
-                        .HasColumnType("Money");
+                    b.Property<double>("Currentbalance")
+                        .HasColumnType("float");
 
                     b.Property<DateTime?>("DeleteAt")
                         .HasColumnType("datetime2");
@@ -96,8 +99,8 @@ namespace CreditCardApi.Infrastructure.Migrations
                     b.Property<double>("Interest")
                         .HasColumnType("float");
 
-                    b.Property<decimal>("MinimumFee")
-                        .HasColumnType("Money");
+                    b.Property<double>("MinimumFee")
+                        .HasColumnType("float");
 
                     b.Property<double>("MinimumFeePercent")
                         .HasColumnType("float");
@@ -105,8 +108,8 @@ namespace CreditCardApi.Infrastructure.Migrations
                     b.Property<DateTime?>("UpdateAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<decimal>("balance")
-                        .HasColumnType("Money");
+                    b.Property<double>("balance")
+                        .HasColumnType("float");
 
                     b.HasKey("Id");
 
@@ -122,8 +125,8 @@ namespace CreditCardApi.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<decimal>("Amount")
-                        .HasColumnType("Money");
+                    b.Property<double>("Amount")
+                        .HasColumnType("float");
 
                     b.Property<string>("Concept")
                         .IsRequired()
@@ -141,11 +144,11 @@ namespace CreditCardApi.Infrastructure.Migrations
                     b.Property<DateTime?>("DeleteAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<decimal>("NewBalance")
-                        .HasColumnType("Money");
+                    b.Property<double>("NewBalance")
+                        .HasColumnType("float");
 
-                    b.Property<decimal>("OldBalance")
-                        .HasColumnType("Money");
+                    b.Property<double>("OldBalance")
+                        .HasColumnType("float");
 
                     b.Property<DateTime>("TransactionDate")
                         .HasColumnType("datetime2");
