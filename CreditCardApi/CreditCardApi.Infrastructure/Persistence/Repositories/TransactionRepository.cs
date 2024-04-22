@@ -19,6 +19,6 @@ public class TransactionRepository : EntityFrameworkRepository<CreditCardTransac
             TypeName = "dbo.TransactionTableType",
             Value = entity
         };
-        await _context.Database.ExecuteSqlRawAsync($"EXEC InsertCreditCardTransaction @Transaction", parameters: new[] { parameter });
+        var result = await _context.Database.ExecuteSqlRawAsync($"EXEC InsertCreditCardTransaction @Transaction", parameters: new[] { parameter });
     }
 }

@@ -17,7 +17,7 @@ internal class CreditCardDetailsConfiguration : IEntityTypeConfiguration<CreditC
         builder.Property(x => x.balance).HasColumnType("Money");
         builder.Property(x => x.Currentbalance).HasColumnType("Money");
         builder.Property(x => x.CurrentInterest).HasColumnType("Money");
-        builder.Property(x => x.MinimumFee).HasColumnType("Money");
+        //builder.Property(x => x.MinimumFee).HasColumnType("Money");
 
     builder.Ignore(x => x.CreditableInterest);
         builder.Ignore(x => x.MinimumFeeToPay);

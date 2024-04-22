@@ -24,5 +24,9 @@ namespace CreditCardApi.Controllers.CreditCardControllers.Response
             
             return await _mediator.Send(query);
         }
+        [HttpGet]
+        public async Task<IEnumerable<ReadCreditCard>?> GetCreditCards() => 
+            await _mediator.Send(new GetAllCreditCardsQuery());
+        
     }
 }

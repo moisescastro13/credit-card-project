@@ -8,7 +8,7 @@ namespace CreditCardApi.Infrastructure.Interfaces;
 public interface IUnitOfWork: IDisposable
 {
     ICreditCardRepository CreditCardRepository { get; }
-    IRepository<CreditCardDetails, CreditCardDetailsID> CreditCardDetailsRepository { get; }
+    ICreditCardDetailsRepository CreditCardDetailsRepository { get; }
     ITransactionRepository TransactionRepository { get; }
     Task<int> SaveChangesAsync();
     void CreateTransaction();

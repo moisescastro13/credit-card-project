@@ -55,6 +55,14 @@ public class CreateTransactionCommandHandler : IRequestHandler<CreateTransaction
 
     private bool ValidMoneyTransaction(CreditCard creditCard, CreateTransactionDto transaction)
     {
+        if (transaction.TransactionType == TransactionType.Collection) return true;
+
+        var cuurentBalance = transaction.Amount + Math.Abs(creditCard.CreditCardDetails.Currentbalance);
+
+        if (cuurentBalance > creditCard.CreditCardDetails.balance){
+            return false;
+        }
+
         return true;
     }
 }

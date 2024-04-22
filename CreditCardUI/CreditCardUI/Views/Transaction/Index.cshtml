@@ -1,0 +1,134 @@
+﻿@model CreateTransactionDto
+
+@{
+    ViewData["Title"] = "Insertar Transacción";
+
+}
+
+<h1>Insertar Transacción</h1>
+
+<div class="container">
+    <form method="post" id="transactionForm">
+        <div>
+            <label asp-for="CreditCardID">ID de la Tarjeta de Crédito:</label>
+            <input asp-for="CreditCardID" value="@ViewBag.Id" class="form-control" required readonly/>
+            <span asp-validation-for="CreditCardID" class="text-danger"></span>
+        </div>
+        <div>
+            <label asp-for="Concept">Concepto:</label>
+            <input asp-for="Concept" class="form-control" required />
+            <span asp-validation-for="Concept" class="text-danger"></span>
+        </div>
+        <div>
+            <label asp-for="TransactionType">Tipo de Transacción:</label>
+            <select asp-for="TransactionType" class="form-control" required>
+                <option value="0">Compra</option>
+                <option value="1">Pago</option>
+            </select>
+            <span asp-validation-for="TransactionType" class="text-danger"></span>
+        </div>
+        <div>
+            <label asp-for="TransactionDate">Fecha de Transacción:</label>
+            <input asp-for="TransactionDate" type="date" class="form-control" required />
+            <span asp-validation-for="TransactionDate" class="text-danger"></span>
+        </div>
+        <div>
+            <label asp-for="Amount">Monto:</label>
+            <input asp-for="Amount" type="number" step="0.01" class="form-control" required />
+            <span asp-validation-for="Amount" class="text-danger"></span>
+        </div>
+        <button type="button" onclick="crearTransaccion('@Url.Action("Create", "CreateTransaction")')" class="btn btn-primary">Insertar Transacción</button>
+    </form>
+</div>
+
+
+<script>
+    function crearTransaccion(url) {
+        var form = document.getElementById("transactionForm");
+        var formData = new FormData(form);
+
+        $.ajax({
+            url: url,
+            type: "POST",
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (response) {
+                console.log("Transaction has been created");
+            },
+            error: function (xhr, status, error) {
+                console.error("Error on create transaction", error);
+            }
+        });
+    }
+</script>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 0;
+    }
+
+    .container {
+        max-width: 500px;
+        margin: 20px auto;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+        color: #333;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+    }
+
+    input[type="text"],
+    input[type="number"],
+    select,
+    button {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 15px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+
+    input[type="date"] {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 15px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+
+    button {
+        background-color: #4CAF50;
+        color: white;
+        padding: 15px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        width: 100%;
+        font-size: 16px;
+    }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+    .text-danger {
+        color: red;
+    }
+</style>

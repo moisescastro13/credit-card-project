@@ -96,9 +96,6 @@ namespace CreditCardApi.Infrastructure.Migrations
                     b.Property<double>("Interest")
                         .HasColumnType("float");
 
-                    b.Property<decimal>("MinimumFee")
-                        .HasColumnType("Money");
-
                     b.Property<double>("MinimumFeePercent")
                         .HasColumnType("float");
 

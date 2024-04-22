@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
 using CreditCardApi.Application.Dtos.CreditCard;
 using CreditCardApi.Domain.Entities;
+using CreditCardApi.Domain.Exceptions;
 using CreditCardApi.Infrastructure.Interfaces;
 using MediatR;
+using Microsoft.AspNetCore.Http;
 
 namespace CreditCardApi.Application.Features.CreditCards.Querys;
 
@@ -31,7 +33,7 @@ public class GetCreditCardInformationQueryHandler : IRequestHandler<GetCreditCar
 
         if (creditCard is null)
         {
-            return null;
+            throw new NotFoundExeption("credit card does not exist", StatusCodes.Status404NotFound);
         }
 
         return _mapper.Map<ReadCreditCardInformation>(creditCard);

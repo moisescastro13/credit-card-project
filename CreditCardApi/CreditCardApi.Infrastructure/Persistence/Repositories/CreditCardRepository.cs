@@ -26,7 +26,7 @@ public class CreditCardRepository : EntityFrameworkRepository<CreditCard, Credit
                                             CreatedDate = c.CreatedDate,
                                             CutOffDate = c.CutOffDate,
                                             CreditCardDetails = c.CreditCardDetails,
-                                            CreditCardTransactions = c.CreditCardTransactions.ToList(),
+                                            CreditCardTransactions = c.CreditCardTransactions.OrderBy(x => x.TransactionDate).ToList(),
                                         }).AsNoTracking().AsSplitQuery().SingleOrDefaultAsync();
 
         return creditCard;
