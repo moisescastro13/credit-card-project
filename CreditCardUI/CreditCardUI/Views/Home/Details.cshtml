@@ -10,41 +10,57 @@
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.CreditCardNumber)
+            Numero de tarjeta de credito
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.CreditCardNumber)
         </dd>
 
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.ClientName)
+            Nombre Propietario
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.ClientName)
         </dd>
 
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.CVV)
+           CVV
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.CVV)
         </dd>
 
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.ExpirationDate)
+            Fecha de Expiracion
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.ExpirationDate)
         </dd>
+        <dt class="col-sm-2">
+           Monto minimo de pago
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CreditCardDetails.MinimumFeeToPay)
+        </dd>
+        <dt class="col-sm-2">
+            Monto Total
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CreditCardDetails.balance)
+        </dd>
+        <dt class="col-sm-2">
+            Monto Deuda
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CreditCardDetails.Currentbalance)
+        </dd>
+        
     </dl>
-
+    <button class="btnCreateTransaction" onclick="window.location.href='@Url.Action("UpdateCreditCard", "Home",
+        new { creditCardID = Model.Id, balance = Model.CreditCardDetails.balance, interest = Model.CreditCardDetails.Interest, minimumFeeToPay = Model.CreditCardDetails.MinimumFeePercent })'">Actualizar informacion</button>
 </div>
 
-<div>
-    <hr />
-    <dl class="row">
-    </dl>
-</div>
+
 
 <div>
     <div>

@@ -8,3 +8,4 @@ public class UpdateCreditCardDto
     public double? Interest { get; set; }
     public double? MinimumFeePercent { get; set; }
 }
+

@@ -7,5 +7,6 @@ namespace CreditCardUI.Interfaces
         Task<IEnumerable<ReadCreditCard>> GetAll();
         Task<ReadCreditCardInformation> GetCreditCardInformation(Guid id);
         Task Create(CreateCreditCardDto createCreditCardDto);
+        Task Update(UpdateCreditCardDto updateCreditCardDto);
     }
 }
