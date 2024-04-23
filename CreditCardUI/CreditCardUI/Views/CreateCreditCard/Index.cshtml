@@ -1,0 +1,145 @@
+﻿@model CreateCreditCardDto
+
+<h1>Crear Tarjeta de Crédito</h1>
+
+<form method="post" id="CreditCardForm">
+    <div>
+        <label asp-for="CreditCardNumber">Número de Tarjeta de Crédito:</label>
+        <input asp-for="CreditCardNumber" class="form-control" />
+        <span asp-validation-for="CreditCardNumber" class="text-danger"></span>
+    </div>
+    <div>
+        <label asp-for="ClientName">Nombre del Cliente:</label>
+        <input asp-for="ClientName" class="form-control" />
+        <span asp-validation-for="ClientName" class="text-danger"></span>
+    </div>
+    <div>
+        <label asp-for="CVV">CVV:</label>
+        <input asp-for="CVV" class="form-control" />
+        <span asp-validation-for="CVV" class="text-danger"></span>
+    </div>
+    <div>
+        <label asp-for="CreatedDate">Fecha de Creación:</label>
+        <input asp-for="CreatedDate" type="date" class="form-control" />
+        <span asp-validation-for="CreatedDate" class="text-danger"></span>
+    </div>
+    <div>
+        <label asp-for="ExpirationDate">Fecha de Expiración:</label>
+        <input asp-for="ExpirationDate" type="date" class="form-control" />
+        <span asp-validation-for="ExpirationDate" class="text-danger"></span>
+    </div>
+    <div>
+        <label asp-for="PaymentDate">Fecha de Pago:</label>
+        <input asp-for="PaymentDate" type="date" class="form-control" />
+        <span asp-validation-for="PaymentDate" class="text-danger"></span>
+    </div>
+    <div>
+        <label asp-for="CutOffDate">Fecha de Corte:</label>
+        <input asp-for="CutOffDate" type="date" class="form-control" />
+        <span asp-validation-for="CutOffDate" class="text-danger"></span>
+    </div>
+    <div>
+        <label asp-for="CreditCardDetails.CreditCardType">Tipo de Tarjeta de Crédito:</label>
+        <select asp-for="CreditCardDetails.CreditCardType" class="form-control">
+            <option value="0">VISA</option>
+            <option value="1">MASTERCARD</option>
+            <option value="2">AMERICANEXPRESS</option>
+        </select>
+        <span asp-validation-for="CreditCardDetails.CreditCardType" class="text-danger"></span>
+    </div>
+    <div>
+        <label asp-for="CreditCardDetails.balance">Saldo:</label>
+        <input asp-for="CreditCardDetails.balance" type="number" class="form-control" />
+        <span asp-validation-for="CreditCardDetails.balance" class="text-danger"></span>
+    </div>
+    <div>
+        <label asp-for="CreditCardDetails.Interest">Interés:</label>
+        <input asp-for="CreditCardDetails.Interest" type="number" step="0.01" class="form-control" />
+        <span asp-validation-for="CreditCardDetails.Interest" class="text-danger"></span>
+    </div>
+    <div>
+        <label asp-for="CreditCardDetails.MinimumFeePercent">Porcentaje de Tarifa Mínima:</label>
+        <input asp-for="CreditCardDetails.MinimumFeePercent" type="number" class="form-control" />
+        <span asp-validation-for="CreditCardDetails.MinimumFeePercent" class="text-danger"></span>
+    </div>
+    <button type="button" onclick="crearTransaccion('@Url.Action("Create", "CreateCreditCard")')">Enviar</button>
+</form>
+
+<script>
+    function crearTransaccion(url) {
+        var form = document.getElementById("CreditCardForm");
+        var formData = new FormData(form);
+
+        $.ajax({
+            url: url,
+            type: "POST",
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (response) {
+                console.log("CreditCard has been created");
+                console.log(url);
+            },
+            error: function (xhr, status, error) {
+                console.error("Error on create CreditCard", error);
+                console.log(url);
+            }
+        });
+    }
+</script>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 0;
+    }
+
+    .container {
+        max-width: 500px;
+        margin: 20px auto;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+        color: #333;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    label {
+        font-weight: bold;
+    }
+
+    input[type="text"],
+    input[type="number"],
+    select {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 15px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+
+    input[type="date"] {
+        width: calc(100% - 22px);
+    }
+
+    a{
+        background-color: #007bff;
+        color: #fff;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+    }
+
+        a:hover {
+            background-color: #0056b3;
+        }
+</style>
