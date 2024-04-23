@@ -28,7 +28,29 @@ public class HomeController : Controller
         return View(creditCardInformation);
     }
 
+    public async Task<IActionResult> UpdateCreditCard(Guid creditCardID, double balance, double interest, double minimumFeeToPay)
+    {
+     //   ViewBag.CreditCardInformation = creditCardInformation;
 
+        var updateCreditCard = new UpdateCreditCardDto(
+            creditCardID, 
+            balance, 
+            interest, 
+            minimumFeeToPay
+            );
+
+        return View(updateCreditCard);
+    }
+    public async Task<IActionResult> Update(UpdateCreditCardDto updateCreditCardDto)
+    {
+        if (ModelState.IsValid)
+        {
+            await _creditCardService.Update(updateCreditCardDto);
+
+        }
+
+        return RedirectToAction("Index", "Home");
+    }
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()
     {

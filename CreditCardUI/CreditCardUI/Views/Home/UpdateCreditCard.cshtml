@@ -1,0 +1,99 @@
+﻿@model UpdateCreditCardDto
+
+
+<h1>Actualizar Detalles de la Tarjeta de Crédito</h1>
+
+<div class="container">
+    <form method="post" id="transactionForm">
+        <div class="form-group">
+            <label asp-for="CreditCardId">ID de la Tarjeta de Crédito:</label>
+            <input asp-for="CreditCardId" class="form-control" readonly />
+        </div>
+        <div class="form-group">
+            <label asp-for="balance">Saldo:</label>
+            <input asp-for="balance" class="form-control"/>
+            <span asp-validation-for="balance" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Interest">Interés:</label>
+            <input asp-for="Interest" class="form-control" />
+            <span asp-validation-for="Interest" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="MinimumFeePercent">Porcentaje de Tarifa Mínima:</label>
+            <input asp-for="MinimumFeePercent" class="form-control" />
+            <span asp-validation-for="MinimumFeePercent" class="text-danger"></span>
+        </div>
+        <button type="button" class="btn btn-primary" onclick="crearTransaccion('@Url.Action("Update", "Home")')">Actualizar</button>
+    </form>
+</div>
+<script>
+    function crearTransaccion(url) {
+        var form = document.getElementById("transactionForm");
+        var formData = new FormData(form);
+
+        $.ajax({
+            url: url,
+            type: "PATCH",
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (response) {
+                console.log("CREDIT CARD has been Updated");
+            },
+            error: function (xhr, status, error) {
+                console.error("Error on Updated CREDIT CARD", error);
+            }
+        });
+    }
+</script>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+    }
+
+    form {
+        max-width: 400px;
+        margin: auto;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        background-color: #f9f9f9;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    label {
+        font-weight: bold;
+    }
+
+    input[type="text"],
+    input[type="number"] {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-sizing: border-box;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+
+    .text-danger {
+        color: red;
+    }
+</style>

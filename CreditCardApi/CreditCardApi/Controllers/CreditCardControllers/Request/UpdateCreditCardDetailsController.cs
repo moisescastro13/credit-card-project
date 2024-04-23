@@ -1,7 +1,6 @@
 ﻿using CreditCardApi.Application.Dtos.CreditCard;
 using CreditCardApi.Application.Features.CreditCards.Commands;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CreditCardApi.Controllers.CreditCardControllers.Request

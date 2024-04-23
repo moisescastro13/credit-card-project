@@ -10,7 +10,7 @@ public class ReadCreditCardDetails
     public required double Interest { get; set; }
     public double Currentbalance { get; set; }
     public double CurrentInterest { get; set; }
-    public double MinimumFeeToPay { get; set; }
     public double MinimumFeePercent { get; set; }
+    public double MinimumFeeToPay { get; set; }
 
 }

@@ -15,7 +15,6 @@ namespace CreditCardUI.Services
             _httpClient = _httpClientFactory.CreateClient("Api");
         }
 
-
         public async Task<IEnumerable<ReadCreditCard>> GetAll()
         {
             var response = await _httpClient.GetAsync(ApiRoutes.CreaditCard);
@@ -38,6 +37,14 @@ namespace CreditCardUI.Services
         {
             await _httpClient.PostAsJsonAsync($"{ApiRoutes.CreaditCard}", createCreditCardDto)
                .ContinueWith(task => task.Result.EnsureSuccessStatusCode());
+        }
+
+        public async Task Update(UpdateCreditCardDto updateCreditCardDto)
+        {
+            
+            await _httpClient.PatchAsJsonAsync($"{ApiRoutes.UpdateCreaditCard}", updateCreditCardDto)
+            .ContinueWith(task => task.Result.EnsureSuccessStatusCode());
+
         }
     }
 }

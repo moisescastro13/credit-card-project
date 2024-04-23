@@ -3,6 +3,7 @@ using CreditCardApi.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 
 namespace CreditCardApi.Infrastructure;
 
@@ -13,8 +14,7 @@ public static class DependencyInjection
         services.AddDbContext<ApplicationDbContext>(x => x.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
         services.AddScoped<IUnitOfWork, UnitOfWork>();
 
-        //services.ConfigureJwt(configuration);
-        //services.AddScoped<IJWTTokenService, JwtServiceManage>();
+        services.AddHealthChecks().AddSqlServer(configuration.GetConnectionString("DefaultConnection")!, "SELECT 1", name: "SQL Server", failureStatus: HealthStatus.Unhealthy, tags: new[] { "Feedback", "Database" });
 
         return services;
     }
